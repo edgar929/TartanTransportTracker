@@ -8,4 +8,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="cmu">#890202</color>
+    <color name="cmu_200">#6e0202</color>
+    <color name="cmu_300">#600101</color>
+    <color name="cmu_400">#520101</color>
 </resources>

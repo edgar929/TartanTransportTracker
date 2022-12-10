@@ -6,26 +6,40 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome!"</string>
+    <string name="view_route">View route</string>
+    <string name="login_failed">Login failed</string>
+    <string name="logout">Logout</string>
+    <string name="change_language">Language</string>
+    <string name="login_succeded">Login success</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="login_succeded">Login success</string>
-    <string name="error_not_connected">Please log in first</string>
-    <string name="error_authentication_canceled">Login aborted</string>
-    <string name="error_no_internet">Network unavailable</string>
-    <string name="error_unknown_error">An unknown error occurred</string>
-    <string name="connection_succeed">Login successful!</string>
+    <string name="error_not_connected" translatable="false">Please log in first</string>
+    <string name="error_authentication_canceled" translatable="false">Login aborted</string>
+    <string name="error_no_internet" translatable="false">Network unavailable</string>
+    <string name="error_unknown_error" translatable="false">An unknown error occurred</string>
+    <string name="connection_succeed" translatable="false">Login successful!</string>
     <string name="button_login_text_logged">View map</string>
     <string name="button_login_text_not_logged">Log In</string>
-    <string name="title_activity_admin_view_route">Admin_view_route</string>
+    <string name="title_activity_admin_view_route" translatable="false">Admin_view_route</string>
     <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
-    <string name="notification_title">"Vous avez reçu une notification"</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="create_route" translatable="false">Create Route</string>
+    <string name="create_bus_stop" translatable="false">Create Bus Stop</string>
+    <string name="bus_stop_position" translatable="false">Bus Stop Position</string>
+    <string name="bus_stop_label" translatable="false">Choose Route</string>
+    <string name="bus_stop_address" translatable="false">Bus Stop Address</string>
+    <string name="route_name_label" translatable="false">Route Name</string>
+
+    <string name="first_fragment_label" translatable="false">First Fragment</string>
+    <string name="second_fragment_label" translatable="false">Second Fragment</string>
+    <string name="next" translatable="false">Next</string>
+    <string name="previous" translatable="false">Previous</string>
+
+    <string name="hello_first_fragment" translatable="false">Hello first fragment</string>
+    <string name="hello_second_fragment" translatable="false">Hello second fragment. Arg: %1$s</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+    <string name="notification_title">you have received a notification</string>
+
 </resources>

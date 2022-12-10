@@ -1,6 +1,8 @@
 package com.tartantransporttracker.ui.route;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +15,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.tartantransporttracker.R;
 
 
@@ -21,12 +24,21 @@ public class AdminViewRoute extends AppCompatActivity implements View.OnClickLis
     private AppBarConfiguration appBarConfiguration;
 
     Button deleteBtn;
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_route);
         deleteBtn = findViewById(R.id.deleteBtn);
+        floatingActionButton = findViewById(R.id.fab);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), CreateRouteActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
     @Override

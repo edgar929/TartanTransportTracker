@@ -47,7 +47,7 @@ public class RouteManager {
                 task.getResult().toObject(Route.class));
     }
 
-    public void updateRoute(String id,Route route){routeRepository.updateRoute(id,route);}
+    public void updateRoute(String id, Route route){routeRepository.updateRoute(id,route);}
 
     public void deleteRoute(String id){
         routeRepository.deleteRoute(id);

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TartanTransportTracker</string>
+    <string name="prompt_email" translatable="false">email</string>
+    <string name="prompt_password" translatable="false">le mot de passe</string>
+    <string name="action_sign_in">Connexion ou Inscription</string>
+    <string name="action_sign_in_short">Connexion</string>
+    <string name="welcome">Bienvenue</string>
+    <string name="invalid_username">Nom d\'utilisateur non valide</string>
+    <string name="invalid_password">Le mot de passe doit contenir plus de 5 caractères</string>
+    <string name="login_failed">Échec de la connexion</string>
+    <string name="login_succeded">Connexion réussie</string>
+    <string name="view_route">Voir l\'itinéraire</string>
+    <string name="logout">" Se déconnecter"</string>
+    <string name="button_login_text_logged">Voir la carte</string>
+    <string name="button_login_text_not_logged">Connexion</string>
+    <string name="change_language">Langue</string>
+    <string name="notification_title">Vous avez reçu une notification</string>
+</resources>
