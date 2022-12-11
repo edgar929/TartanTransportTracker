@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tartantransporttracker.R;
@@ -28,6 +31,8 @@ public class UpdateRouteActivity extends AppCompatActivity {
     private EditText edtName;
     private RouteManager routeManager;
     private String id;
+    private Route route;
+    private List<Route> routes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +43,30 @@ public class UpdateRouteActivity extends AppCompatActivity {
         edtName = findViewById(R.id.route_name);
         routeManager = new RouteManager();
 
+        getAvailableRoutes();
+
         Intent intent = getIntent();
         id = intent.getStringExtra("id");
+        if (id != null)
+        {
+            Log.e("ID676#", id);
+            route = findRoute(id);
+            if (route != null)
+            {
+                Log.e("ROUTE#", route.getName());
+                edtName.setText(route.getName());
+            }
+        }
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = edtName.getText().toString();
-                Route route = findRoute(id);
                 if (route != null) {
                     Boolean routeExists = routeExists(name);
                     if (!routeExists) {
-                        routeManager.createRoute(route);
+                        route.setName(name);
+                        routeManager.updateRoute(id, route);
 
                         edtName.setText("");
                         edtName.clearFocus();
@@ -67,29 +84,42 @@ public class UpdateRouteActivity extends AppCompatActivity {
         });
     }
 
-    private List<Route> getAvailableRoutes()
+    private void getAvailableRoutes()
     {
-        List<Route> allRoutes = new ArrayList<>();
-        routeManager.findAllRoutes().addOnCompleteListener(
-                new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful())
-                        {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Route route = document.toObject(Route.class);
-                                allRoutes.add(route);
-                            }
-                        }
+        routeManager.findAllRoutes().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                if(!queryDocumentSnapshots.isEmpty()){
+                    List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+                    for(DocumentSnapshot doc:list){
+                        Route route = doc.toObject(Route.class);
+                        routes.add(route);
                     }
+
+                }else{
+                    Log.w("Message:","No data found in the database");
                 }
-        );
-        return allRoutes;
+            }
+        });
+//        routeManager.findAllRoutes().addOnCompleteListener(
+//                new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful())
+//                        {
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Route route = document.toObject(Route.class);
+//                                routes.add(route);
+//                                Log.e("COUNT###00", String.valueOf(route.getName()));
+//                            }
+//                        }
+//                    }
+//                }
+//        );
     }
 
     private boolean routeExists (String name)
     {
-        List<Route> routes = getAvailableRoutes();
         Iterator<Route> iterator = routes.iterator();
         if (iterator.hasNext())
         {
@@ -103,7 +133,6 @@ public class UpdateRouteActivity extends AppCompatActivity {
 
     private Route findRoute(String id)
     {
-        List<Route> routes = this.getAvailableRoutes();
         Iterator<Route> iterator = routes.iterator();
         if (iterator.hasNext())
         {

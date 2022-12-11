@@ -27,6 +27,7 @@
     <string name="create_route" translatable="false">Create Route</string>
     <string name="update_route" translatable="false">Update Route</string>
     <string name="create_bus_stop" translatable="false">Create Bus Stop</string>
+    <string name="update_bus_stop" translatable="false">Update Bus Stop</string>
     <string name="bus_stop_position" translatable="false">Bus Stop Position</string>
     <string name="bus_stop_label" translatable="false">Choose Route</string>
     <string name="bus_stop_address" translatable="false">Bus Stop Address</string>
