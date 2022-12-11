@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TartanTransportTracker"
         tools:targetApi="31">
-
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
@@ -67,7 +73,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true">
-
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -75,14 +80,12 @@
 
         <meta-data
             android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
-
-        <!-- NOTIFICATION SERVICE -->
+            android:resource="@array/preloaded_fonts" /> <!-- NOTIFICATION SERVICE -->
         <service
             android:name=".notification.NotificationsService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
     </application>

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -15,6 +16,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.tartantransporttracker.models.BusStop;
+import com.tartantransporttracker.models.Route;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,17 +68,12 @@ public class BusRepository {
     public List<BusStop> findAll(){
         List<BusStop> busStops = new ArrayList<>();
         this.getBusStopsCollection().get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>(){
+
                     @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(!queryDocumentSnapshots.isEmpty()){
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for(DocumentSnapshot doc:list){
-                                BusStop route = doc.toObject(BusStop.class);
-                                busStops.add(route);
-                            }
-                        }else{
-                            Log.w(TAG,"No data found in the database");
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            busStops.addAll(task.getResult().toObjects(BusStop.class));
                         }
                     }
                 });

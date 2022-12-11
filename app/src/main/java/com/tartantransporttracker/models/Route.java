@@ -1,10 +1,16 @@
 package com.tartantransporttracker.models;
 
-import com.google.firebase.firestore.DocumentId;
+import android.util.Log;
 
+import com.google.firebase.firestore.DocumentId;
+import com.google.firebase.firestore.Exclude;
+import com.tartantransporttracker.notification.Observer;
+import com.tartantransporttracker.notification.Subject;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Route {
+public class Route implements Subject {
     @DocumentId
     private String id;
     private String name;
@@ -12,7 +18,9 @@ public class Route {
     private List<User> students;
 
 
+
     public Route() {
+        students = new ArrayList<>();
     }
 
     public Route(String routeName) {
@@ -42,5 +50,28 @@ public class Route {
 
     public void setStudents(List<User> _users) {
         students = _users;
+    }
+
+    @Override
+    public void register(User std) {
+       students.add(std);
+        Log.w("Number of Students",String.valueOf(students.size()));
+    }
+
+    @Override
+    public void unregister(User std) {
+            students.remove(std);
+    }
+
+    @Override
+    public void notifyObservers(String notification) {
+        for (User std : students) {
+            std.update(notification);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return name ;
     }
 }

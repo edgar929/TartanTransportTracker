@@ -12,6 +12,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.tartantransporttracker.models.Role;
+import com.tartantransporttracker.models.Route;
 import com.tartantransporttracker.models.User;
 
 public class UserRepository {
@@ -101,14 +102,14 @@ public class UserRepository {
         }
         return null;
     }
-
-    // Update User role
-    public void updateRole(String role) {
-        String uid = this.getCurrentUserUid();
-        if(uid != null){
-            this.getUsersCollection().document(uid).update(ROLE_FIELD, role);
-        }
-    }
+//
+//    // Update User role
+//    public void updateRole(String role) {
+//        String uid = this.getCurrentUserUid();
+//        if(uid != null){
+//            this.getUsersCollection().document(uid).update(ROLE_FIELD, role);
+//        }
+//    }
 
     // Delete the User from Firestore
     public void deleteUserFromFirestore() {
@@ -117,4 +118,20 @@ public class UserRepository {
             this.getUsersCollection().document(uid).delete();
         }
     }
+
+    // Update User isMentor
+    public void updateRole(String role) {
+        String uid = this.getCurrentUserUid();
+        if(uid != null){
+            this.getUsersCollection().document(uid).update("role", role);
+        }
+    }
+
+//    public void updatePreferedRoute(Route route) {
+//        String uid = this.getCurrentUserUid();
+//        if(uid != null){
+//            this.getUsersCollection().document(uid).update("preferredRoute",route);
+//        }
+//    }
+
 }

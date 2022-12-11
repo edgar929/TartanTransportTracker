@@ -38,7 +38,7 @@ public class RouteManager {
         routeRepository.createRoute(route);
     }
 
-    public List<Route> findAllRoutes(){
+    public Task<QuerySnapshot> findAllRoutes(){
         return routeRepository.findAll();
     }
 
@@ -52,5 +52,11 @@ public class RouteManager {
     public void deleteRoute(String id){
         routeRepository.deleteRoute(id);
     }
+
+    public void updateStudentsList(List<User> students,String routeID) {
+        routeRepository.updateStudentsList(students,routeID);
+    }
+
+
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;;
+import com.tartantransporttracker.models.Route;
 import com.tartantransporttracker.models.User;
 import com.tartantransporttracker.repository.UserRepository;
 
@@ -66,4 +67,8 @@ public class UserManager {
         });
     }
 
+//
+//    public void updatePreferedRoute(Route route){
+//        userRepo.updatePreferedRoute(route);
+//    }
 }

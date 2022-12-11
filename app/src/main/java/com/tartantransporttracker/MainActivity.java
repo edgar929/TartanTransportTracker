@@ -11,7 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.tartantransporttracker.managers.BusStopManager;
 import com.tartantransporttracker.managers.RouteManager;
+import com.tartantransporttracker.models.BusStop;
 import com.tartantransporttracker.models.Route;
 import com.tartantransporttracker.ui.route.AdminViewRoute;
 import com.firebase.ui.auth.AuthUI;
@@ -22,6 +28,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.tartantransporttracker.databinding.ActivityMainBinding;
 import com.tartantransporttracker.managers.UserManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +37,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
     private static final int RC_SIGN_IN = 123;
     private UserManager userManager = UserManager.getInstance();
     private RouteManager routeManager = RouteManager.getInstance();
+    private BusStopManager busStopManager = BusStopManager.getInstance();
     TextView userEmail;
     List<Route> routes;
     @Override
@@ -40,12 +48,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        routes = routeManager.findAllRoutes();
+        FirebaseMessaging firebaseMessaging = FirebaseMessaging.getInstance();
+        firebaseMessaging.subscribeToTopic("Bus_departure");
+//        Log.e("====================","before");
+//        routes = getRoutes();
+//        Log.e("==================================","After");
          View hView = binding.navView.getHeaderView(0);
 
          userEmail = hView.findViewById(R.id.email);
 
-         routes = routeManager.findAllRoutes();
+//         List<BusStop> busStops  = busStopManager.findAllBusStops();
+
+//         Log.e("From size",String.valueOf(routes.size()));
+
         setupListeners();
     }
     private void setupListeners(){
@@ -60,6 +75,19 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
         });
     }
 
+
+    public List<Route> getRoutes(){
+        List<Route> newRoutes = new ArrayList<>();
+        routeManager.findAllRoutes().addOnCompleteListener(
+                new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        newRoutes.addAll(task.getResult().toObjects(Route.class));
+                    }
+                }
+        );
+        return newRoutes;
+    }
 
     private void startSignInActivity(){
         // Choose authentication providers
@@ -108,7 +136,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
             //success
             if(resultCode == RESULT_OK){
                 userManager.createUser();
-                getUserData();
+//                getUserData();
                 showSnackBar(getString(R.string.connection_succeed));
             } else {
                 //ERRORS
@@ -154,7 +182,7 @@ public class MainActivity extends BaseActivity<ActivityMainBinding> implements N
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.view_routes:
-                Intent intent = new Intent(MainActivity.this, AdminViewRoute.class);
+                Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 break;
 

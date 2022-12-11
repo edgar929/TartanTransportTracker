@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.tartantransporttracker.models.BusStop;
 import com.tartantransporttracker.models.Role;
 import com.tartantransporttracker.models.Route;
 import com.tartantransporttracker.models.User;
@@ -78,26 +79,8 @@ public class RouteRepository {
     }
 
     // get all data from firestore
-    public List<Route> findAll(){
-        List<Route> routes = new ArrayList<>();
-        this.getRoutesCollection().get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(!queryDocumentSnapshots.isEmpty()){
-                            List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                            for(DocumentSnapshot doc:list){
-                                Route route = doc.toObject(Route.class);
-                                Log.e("route id from repo", route.getId());
-                                Log.e("Route name from repo",route.getName());
-                                routes.add(route);
-                            }
-                        }else{
-                            Log.w(TAG,"No data found in the database");
-                        }
-                    }
-                });
-        return routes;
+    public Task<QuerySnapshot> findAll(){
+        return this.getRoutesCollection().get();
     }
 
     //Get Single route from firestore
@@ -106,6 +89,11 @@ public class RouteRepository {
             return  this.getRoutesCollection().document(id).get();
         }
         return null;
+    }
+
+
+    public void updateStudentsList(List<User> students,String routeID) {
+            this.getRoutesCollection().document(routeID).update("students",students);
     }
 
 
